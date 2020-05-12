@@ -163,6 +163,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics-opengl.cpp" />
     <ClCompile Include="hello_window.cpp" />
+    <ClCompile Include="triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics-opengl.h" />

@@ -12,3 +12,5 @@ using namespace std;
 int hello_window();
 
 int colored_window();
+
+int triangle();

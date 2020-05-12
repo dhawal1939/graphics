@@ -4,7 +4,7 @@
 int main()
 {
     int return_status = -1;
-    return_status = colored_window();
+    return_status = triangle();
     cout << "\n\nReturn Status --> " << return_status << endl;
 }
 
