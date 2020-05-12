@@ -1,11 +1,11 @@
 // graphics-opengl.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
-#include <iostream>
-
+#include "graphics-opengl.h"
 int main()
 {
-    std::cout << "Hello World!\n";
+    int return_status = -1;
+    return_status = hello_window();
+    cout << "Return Status --> " << return_status << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
