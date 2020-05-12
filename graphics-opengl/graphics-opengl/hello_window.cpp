@@ -108,6 +108,7 @@ int hello_window()
 																								/*
 																								Poll or catch the events of window like key presses mouse movements
 																								*/
+
 	}
 
 	glfwTerminate();																			
