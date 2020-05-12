@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics-opengl.cpp" />
-    <ClCompile Include="hellow_window.cpp" />
+    <ClCompile Include="hello_window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics-opengl.h" />
