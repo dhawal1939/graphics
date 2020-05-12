@@ -2,7 +2,8 @@
 
 void resize_callback(GLFWwindow * window, int w, int h)
 {
-	glViewport(0, 0, w, h);																		/* 
+	glViewport(0, 0, w, h);																		
+																								/* 
 																								updating of size shall be reflected
 																								*/
 }
@@ -25,24 +26,28 @@ int hello_window()
 {
 
 	/* Window Initialization */
-	if (GL_FALSE == glfwInit())																	/* If created it returns GL_TRUE */
+	if (GL_FALSE == glfwInit())																	
+																								/* If created it returns GL_TRUE */
 	{
 		cout << "Error initializing GL window" << endl;
 		return -1;
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);												/*
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);												
+																								/*
 																								glfwWindowHint sets the first argument with the 
 																								values provided as second argument
 																								first argument is an option while second argument is a value
 																								based on which context is configured.
 																								*/
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);												/*
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);												
+																								/*
 																								MAJOR MINOR together states the OPENGL version to be at 4.6 
 																								*/
 
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);								/*
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);								
+																								/*
 																								The option OPENGL PROFILE can take 3 values
 																								1 Core
 																								2 Compact
@@ -51,7 +56,8 @@ int hello_window()
 																								While using ES version embedded system omit this option in total
 																								*/
 
-	GLFWwindow *window = glfwCreateWindow(width, length, "hello_window", nullptr, nullptr);		/*
+	GLFWwindow *window = glfwCreateWindow(width, length, "hello_window", nullptr, nullptr);		
+																								/*
 																								The window shall be created but if wont be rendered on to the
 																								screen for that we need to Make it as ContextCurrent
 																								Last to nullptrs are for monitor and 
@@ -66,7 +72,8 @@ int hello_window()
 	glfwMakeContextCurrent(window);
 
 
-	glfwSetFramebufferSizeCallback(window, resize_callback);									/*
+	glfwSetFramebufferSizeCallback(window, resize_callback);									
+																								/*
 																								Shall be used if the window is resized like we do often
 																								*/
 
@@ -90,19 +97,24 @@ int hello_window()
 		/* Logic goes here */
 		render_logic(window);
 
-		glfwSwapBuffers(window);																/*
+		glfwSwapBuffers(window);																
+																								/*
 																								The swap buffers is for the content to be double buffered if 
 																								we dont use this render shall take time as generally with single buffer it either
 																								fills from left or right
 																								*/
 
-		glfwPollEvents();																		/*
+		glfwPollEvents();																		
+																								/*
 																								Poll or catch the events of window like key presses mouse movements
 																								*/
 	}
 
-	glfwTerminate();																			/* 
+	glfwTerminate();																			
+																								/*
 																								We terminate the window once finished
+																								After doing this we need a glfwinit to use any glfw 
+																								function
 																								*/
 	
 	return 0;
