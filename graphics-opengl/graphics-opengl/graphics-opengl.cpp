@@ -4,8 +4,8 @@
 int main()
 {
     int return_status = -1;
-    return_status = hello_window();
-    cout << "Return Status --> " << return_status << endl;
+    return_status = colored_window();
+    cout << "\n\nReturn Status --> " << return_status << endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

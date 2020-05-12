@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="colored_window.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics-opengl.cpp" />
     <ClCompile Include="hello_window.cpp" />

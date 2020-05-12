@@ -1,6 +1,7 @@
 #include "graphics-opengl.h"
 
-void resize_callback(GLFWwindow * window, int w, int h)
+
+void hello_window_resize_callback(GLFWwindow * window, int w, int h)
 {
 	glViewport(0, 0, w, h);																		
 																								/* 
@@ -8,7 +9,7 @@ void resize_callback(GLFWwindow * window, int w, int h)
 																								*/
 }
 
-void render_logic(GLFWwindow* window)
+void hello_window_render_logic(GLFWwindow* window)
 {
 	/*
 	Basically waits till the ESC key or q key is pressed
@@ -56,7 +57,7 @@ int hello_window()
 																								While using ES version embedded system omit this option in total
 																								*/
 
-	GLFWwindow *window = glfwCreateWindow(width, length, "hello_window", nullptr, nullptr);		
+	GLFWwindow *window = glfwCreateWindow(width, height, "hello_window", nullptr, nullptr);		
 																								/*
 																								The window shall be created but if wont be rendered on to the
 																								screen for that we need to Make it as ContextCurrent
@@ -72,7 +73,7 @@ int hello_window()
 	glfwMakeContextCurrent(window);
 
 
-	glfwSetFramebufferSizeCallback(window, resize_callback);									
+	glfwSetFramebufferSizeCallback(window, hello_window_resize_callback);									
 																								/*
 																								Shall be used if the window is resized like we do often
 																								*/
@@ -95,7 +96,7 @@ int hello_window()
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Logic goes here */
-		render_logic(window);
+		hello_window_render_logic(window);
 
 		glfwSwapBuffers(window);																
 																								/*
