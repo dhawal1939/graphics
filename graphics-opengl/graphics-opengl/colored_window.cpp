@@ -47,12 +47,13 @@ int colored_window()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, colored_window_resize_callback);
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (glewInit() != GLEW_OK)
 	{
 		cout << "Error fetching function pointers of GL Library" << endl;
 	}
 
 	/* Render Logic */
+	cout << "press S to start color change" << endl;
 	while (!glfwWindowShouldClose(window))
 	{
 		colored_window_render_logic(window);

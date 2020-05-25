@@ -33,7 +33,7 @@ int triangle()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, triangle_resize_callback);
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (glewInit() != GLEW_OK)
 	{
 		cout << "Opengl function pointers loading failed" << endl;
 		return -1;

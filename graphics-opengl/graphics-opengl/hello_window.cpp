@@ -86,7 +86,7 @@ int hello_window()
 	function pointers
 	*/
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (glewInit() != GLEW_OK)
 	{
 		cout << "Error initialzing the glad" << endl;
 		return -1;
