@@ -162,13 +162,15 @@
     <ClCompile Include="colored_window.cpp" />
     <ClCompile Include="graphics-opengl.cpp" />
     <ClCompile Include="hello_window.cpp" />
-    <ClCompile Include="triangle.cpp" />
+    <ClCompile Include="lab_1.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics-opengl.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="triangle.vert" />
+    <None Include="lab_1.frag" />
+    <None Include="lab_1.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

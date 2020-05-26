@@ -24,7 +24,10 @@
     <ClCompile Include="colored_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="triangle.cpp">
+    <ClCompile Include="lab_1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,6 +37,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="triangle.vert" />
+    <None Include="lab_1.frag" />
+    <None Include="lab_1.vert" />
   </ItemGroup>
 </Project>
