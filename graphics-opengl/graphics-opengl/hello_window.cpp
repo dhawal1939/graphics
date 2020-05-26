@@ -76,6 +76,7 @@ int hello_window()
 	glfwSetFramebufferSizeCallback(window, hello_window_resize_callback);									
 																								/*
 																								Shall be used if the window is resized like we do often
+																								the callback expects new height and width along with the window object
 																								*/
 
 	/*
