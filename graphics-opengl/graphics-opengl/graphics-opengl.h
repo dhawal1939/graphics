@@ -8,6 +8,7 @@
 #define width 1920
 #define height 1080
 
+
 using namespace std;
 
 string read_shader(char* filename);

@@ -24,10 +24,10 @@
     <ClCompile Include="colored_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lab_1.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="labs\lab1\lab_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,7 +37,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lab_1.frag" />
-    <None Include="lab_1.vert" />
+    <None Include="labs\lab1\lab_1.frag" />
+    <None Include="labs\lab1\lab_1.vert" />
   </ItemGroup>
 </Project>
