@@ -51,6 +51,7 @@ int main()
 	if (glewInit()!=GLEW_OK)
 	{
 		glfwDestroyWindow(window);
+		glfwTerminate();
 		return -1;
 	}
 

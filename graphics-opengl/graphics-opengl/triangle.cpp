@@ -2,7 +2,7 @@
 
 int triangle_render_logic(GLFWwindow* window)
 {
-	;
+	return 0;
 }
 
 void triangle_resize_callback(GLFWwindow* window, int w, int h)
