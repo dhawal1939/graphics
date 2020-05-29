@@ -5,7 +5,7 @@
 int main()
 {
     int return_status = -1;
-    return_status = lab_1_triangle();
+    return_status = sample_triangle();
     cout << "\n\nReturn Status --> " << return_status << endl;
 }
 

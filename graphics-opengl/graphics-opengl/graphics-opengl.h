@@ -17,4 +17,4 @@ int hello_window();
 
 int colored_window();
 
-int lab_1_triangle();
+int sample_triangle();
