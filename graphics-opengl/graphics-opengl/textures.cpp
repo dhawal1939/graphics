@@ -7,7 +7,7 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-const char *container = "C:/Users/brothereye/source/repos/thesigmaguy/graphics/graphics-opengl/graphics-opengl/container.jpg";
+const char *container = "container.jpg";
 int textures()
 {
     // glfw: initialize and configure
@@ -121,7 +121,7 @@ int textures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load(container, &w, &h, &nrChannels, 0);
+    data = stbi_load("awesomeface.png", &w, &h, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
