@@ -5,7 +5,7 @@
 int main()
 {
     int return_status = -1;
-    return_status = sample_triangle();
+    return_status = textures();
     cout << "\n\nReturn Status --> " << return_status << endl;
 }
 
