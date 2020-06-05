@@ -1,162 +1,144 @@
 #include "graphics-opengl.h"
 
-void sample_triangle_resize_callback(GLFWwindow *window, int w, int h)
+void sample_triangle_resize_callback(GLFWwindow* window, int w, int h)
 {
 	glViewport(0, 0, w, h);
 }
 
-GLuint sample_triangle_create_triangle_vbo()
+GLuint sample_triangle_vao()
 {
+	GLuint vao, vbo;
+
 	GLfloat vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f,  0.5f, 0.0f,  // top left 
-	// second triangle
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left
+		-1.0, 0.0, 0.0,
+		0.0, 1.0, 0.0,
+		1.0, 0.0, 0.0,
 	};
-	GLuint* vao = new GLuint[1], * vbo = new GLuint[1];
-	
-	glGenVertexArrays(1, vao);
-	glBindVertexArray(*vao);
 
-	glGenBuffers(1, vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), 0);
-	glEnableVertexAttribArray(0);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	{
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	return *vao;
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+		glEnableVertexAttribArray(0);
+
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	return vao;
 }
-GLuint sample_triangle_compile_shader(GLenum shader_type, const char *shader_filename)
+
+GLuint sample_triangle_load_shader(string filename, GLenum shader_type)
 {
-	GLuint shader;
+	GLuint shader = glCreateShader(shader_type);
 
-	shader = glCreateShader(shader_type);
-
-	string temp = read_shader((char*)shader_filename);
+	string temp = read_shader(filename);
 	GLchar* shader_code = (char*)temp.c_str();
-
-	GLint result = 0;
-	char elog[512];
-
-	glShaderSource(shader, 1, &shader_code, nullptr);
+	
+	glShaderSource(shader, 1, &shader_code, 0);
 
 	glCompileShader(shader);
 
+	GLint result;
+	char info_log[512];
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 	if (!result)
 	{
-		glGetShaderInfoLog(shader, sizeof(elog), nullptr, elog);
-		cout << elog << endl;
-		return -1;
+		glGetShaderInfoLog(shader, sizeof(info_log), nullptr, info_log);
+		return print_error(info_log);
 	}
 
 	return shader;
 }
-GLuint sample_triangle_create_program(const char *vertex_shader_file, const char* frag_shader_file)
+
+GLuint sample_triangle_shadder_program(string vert_file, string frag_file)
 {
 	GLuint program = glCreateProgram();
-
 	if (!program)
-	{
-		cout << "Error creating Program" << endl;
-		return -1;
-	}
+		return print_error("ERROR CREATING PROGRAM");
 
-	GLuint vertex_shader = sample_triangle_compile_shader(GL_VERTEX_SHADER, vertex_shader_file);
-	GLuint frag_shader = sample_triangle_compile_shader(GL_FRAGMENT_SHADER, frag_shader_file);
+	GLuint vert_shader, frag_shader;
+	vert_shader = sample_triangle_load_shader(vert_file, GL_VERTEX_SHADER);
+	frag_shader = sample_triangle_load_shader(frag_file, GL_FRAGMENT_SHADER);
 
-	glAttachShader(program, vertex_shader);
+	glAttachShader(program, vert_shader);
 	glAttachShader(program, frag_shader);
 
+	GLint result;
+	char info_log[512];
+
 	glLinkProgram(program);
-
-	GLint result = 0;
-	char elog[512] = {'\0'};
-
+		
 	glGetProgramiv(program, GL_LINK_STATUS, &result);
 	if (!result)
 	{
-		glGetProgramInfoLog(program, sizeof(elog), nullptr, elog);
-		cout << elog << endl;
-		return -1;
+		glGetProgramInfoLog(program, sizeof(info_log), nullptr, info_log);
+		return print_error(info_log);
 	}
 
 	glValidateProgram(program);
 
 	glGetProgramiv(program, GL_VALIDATE_STATUS, &result);
-
 	if (!result)
 	{
-		glGetProgramInfoLog(program, sizeof(elog), nullptr, elog);
-		cout << elog << endl;
+		glGetProgramInfoLog(program, sizeof(info_log), nullptr, info_log);
+		return print_error(info_log);
 	}
-
-	glDeleteShader(vertex_shader);
-	glDeleteShader(frag_shader);
 
 	return program;
 }
 
 int sample_triangle()
 {
-	if (glfwInit() != GL_TRUE)
+	if (!glfwInit())
 	{
-		cout << "GLFW INIT Failed" << endl;
-		return - 1;
+		
 	}
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	GLFWwindow* window = glfwCreateWindow(width, height, "lab_1", nullptr, nullptr);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Sample Triangle", nullptr, nullptr);
 
 	if (!window)
-	{
-		cout << "Error Creating Window" << endl;
-		return -1;
-	}
+		return print_error("ERROR CREATING WINDOW");
 
 	glfwMakeContextCurrent(window);
 
 	glfwSetFramebufferSizeCallback(window, sample_triangle_resize_callback);
 
 	if (glewInit() != GLEW_OK)
-	{
-		cout << "GLEW INIT Failed" << endl;
-		return -1;
-	}
-	GLuint vao = sample_triangle_create_triangle_vbo();
+		return print_error("GLEW INIT FAILED");
 
-	const char* vertex_shader_file = "C:/Users/brothereye/source/repos/Graphics/graphics-opengl/graphics-opengl/exercises/sample_triangle/sample_triangle.vert";
-	const char* frag_shader_file = "C:/Users/brothereye/source/repos/Graphics/graphics-opengl/graphics-opengl/exercises/sample_triangle/sample_triangle.frag";
-
-	GLuint program = sample_triangle_create_program(vertex_shader_file, frag_shader_file);
+	
+	string vert_file = "C:/Users/brothereye/source/repos/Graphics/graphics-opengl/graphics-opengl/exercises/sample_triangle/sample_triangle.vert";
+	string frag_file = "C:/Users/brothereye/source/repos/Graphics/graphics-opengl/graphics-opengl/exercises/sample_triangle/sample_triangle.frag";
+	
+	GLuint program = sample_triangle_shadder_program(vert_file, frag_file);
+	GLuint vao = sample_triangle_vao();
 
 	while (!glfwWindowShouldClose(window))
 	{
-		//Render logic
-		glClearColor(.2f, .2f, .2f, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT);
-
+		//Render Logic
 		glUseProgram(program);
-
-			glBindVertexArray(vao);
-			
-			glDrawArrays(GL_FRONT_AND_BACK, 0, 6);
-
-			glBindVertexArray(0);
+		
+		glBindVertexArray(vao);
+		{
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		}
+		glBindVertexArray(0);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 
-	glDeleteProgram(program);
-	glfwTerminate();
 	return 0;
 }

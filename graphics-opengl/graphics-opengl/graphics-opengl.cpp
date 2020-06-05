@@ -1,7 +1,7 @@
 #include "graphics-opengl.h"
 
 
-string read_shader(char* filename)
+string read_shader(string filename)
 {
 	ifstream shader(filename);
 	if (!shader.good())
@@ -13,3 +13,8 @@ string read_shader(char* filename)
 		istreambuf_iterator<char>());
 }
 
+int print_error(string err_string)
+{
+	cout << err_string << endl;
+	return -1;
+}

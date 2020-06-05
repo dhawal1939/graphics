@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;GLEW_STATIC;GLFW_INCLUDE_NONE;GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLAD\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;GLEW_STATIC;GLFW_INCLUDE_NONE;GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLAD\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,22 +159,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c" />
+    <ClCompile Include="exercises\colored_window\colored_window.cpp" />
+    <ClCompile Include="exercises\hello_window\hello_window.cpp" />
+    <ClCompile Include="exercises\sample_triangle\sample_triangle.cpp" />
     <ClCompile Include="graphics-opengl.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics-opengl.h" />
-    <ClInclude Include="shader_s.h" />
-    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exercises\sample_triangle\sample_triangle.frag" />
     <None Include="exercises\sample_triangle\sample_triangle.vert" />
-    <None Include="texture.frag" />
-    <None Include="texture.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg" />

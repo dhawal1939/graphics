@@ -57,7 +57,7 @@ int hello_window()
 																								While using ES version embedded system omit this option in total
 																								*/
 
-	GLFWwindow *window = glfwCreateWindow(width, height, "hello_window", nullptr, nullptr);		
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "hello_window", nullptr, nullptr);		
 																								/*
 																								The window shall be created but if wont be rendered on to the
 																								screen for that we need to Make it as ContextCurrent
