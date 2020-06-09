@@ -158,23 +158,6 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);glfw3.lib;opengl32.lib;glew32s.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="exercises\colored_window\colored_window.cpp" />
-    <ClCompile Include="exercises\hello_window\hello_window.cpp" />
-    <ClCompile Include="exercises\sample_triangle\sample_triangle.cpp" />
-    <ClCompile Include="graphics-opengl.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="graphics-opengl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exercises\sample_triangle\sample_triangle.frag" />
-    <None Include="exercises\sample_triangle\sample_triangle.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="container.jpg" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
