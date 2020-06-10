@@ -18,6 +18,27 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dependencies\GLAD\src\glad.c" />
+    <ClCompile Include="glfw_window_setup.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="program.cpp" />
+    <ClCompile Include="sample_triangle.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="stdfx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common_header.h" />
+    <ClInclude Include="glfw_window_setup.h" />
+    <ClInclude Include="program.h" />
+    <ClInclude Include="sample_triangle.h" />
+    <ClInclude Include="shader.h" />
+    <ClInclude Include="stdfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample_triangle.frag" />
+    <None Include="sample_triangle.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{96E8A022-29FB-4AFC-B37A-0F5B940597E0}</ProjectGuid>
@@ -107,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;GLEW_STATIC;GLFW_INCLUDE_NONE;GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLAD\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +168,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;GLEW_STATIC;GLFW_INCLUDE_NONE;GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphics-opengl;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLAD\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
