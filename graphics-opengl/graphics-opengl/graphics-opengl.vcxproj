@@ -20,22 +20,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\dependencies\GLAD\src\glad.c" />
-    <ClCompile Include="glfw_window_setup.cpp" />
+    <ClCompile Include="window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="program.cpp" />
+    <ClCompile Include="sample_rectangle.cpp" />
     <ClCompile Include="sample_triangle.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="stdfx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_header.h" />
-    <ClInclude Include="glfw_window_setup.h" />
+    <ClInclude Include="window.h" />
     <ClInclude Include="program.h" />
+    <ClInclude Include="sample_rectangle.h" />
     <ClInclude Include="sample_triangle.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="stdfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="sample_rectangle.frag" />
+    <None Include="sample_rectangle.vert" />
     <None Include="sample_triangle.frag" />
     <None Include="sample_triangle.vert" />
   </ItemGroup>

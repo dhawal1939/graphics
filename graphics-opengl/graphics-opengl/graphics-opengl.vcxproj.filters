@@ -16,15 +16,15 @@
     <Filter Include="sample_triangle">
       <UniqueIdentifier>{c7b4c928-903a-4733-b2e5-b1f765204730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sample_rectangle">
+      <UniqueIdentifier>{b4130664-ae3c-473a-a26f-abd5430fd73a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\dependencies\GLAD\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glfw_window_setup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sample_triangle.cpp">
@@ -39,12 +39,15 @@
     <ClCompile Include="stdfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sample_rectangle.cpp">
+      <Filter>sample_rectangle</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdfx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="glfw_window_setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sample_triangle.h">
@@ -59,6 +62,12 @@
     <ClInclude Include="common_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sample_rectangle.h">
+      <Filter>sample_rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="sample_triangle.frag">
@@ -66,6 +75,12 @@
     </None>
     <None Include="sample_triangle.vert">
       <Filter>sample_triangle</Filter>
+    </None>
+    <None Include="sample_rectangle.vert">
+      <Filter>sample_rectangle</Filter>
+    </None>
+    <None Include="sample_rectangle.frag">
+      <Filter>sample_rectangle</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include "stdfx.h"
 
-class glfw_window_setup
+class Window
 {
 private:
 	unsigned int major = 4;
@@ -15,6 +15,6 @@ private:
 
 public:
 	GLFWwindow* window = nullptr;
-	glfw_window_setup();
-	~glfw_window_setup();
+	Window();
+	~Window();
 };

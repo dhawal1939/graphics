@@ -4,4 +4,5 @@
 #include "shader.h"
 #include "program.h"
 
-int sample_triangle(string vert_file, string frag_file);
+int sample_rectangle(string vert_file, string frag_file);
+

@@ -2,7 +2,7 @@
 
 int main()
 {
-	int result = sample_triangle(file_path + "sample_triangle.vert", file_path + "sample_triangle.frag");
+	int result = sample_rectangle(file_path + "sample_rectangle.vert", file_path + "sample_rectangle.frag");
 	cout << "Result:\t" << result << endl;
 	return 0;
 }

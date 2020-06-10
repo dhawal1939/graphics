@@ -2,7 +2,7 @@
 
 int sample_triangle(string vert_file, string frag_file)
 {
-	glfw_window_setup *window = new glfw_window_setup();
+	Window *window = new Window();
 
 	if (init())
 		return -1;

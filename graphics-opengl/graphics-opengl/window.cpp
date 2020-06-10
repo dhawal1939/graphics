@@ -1,6 +1,6 @@
-#include "glfw_window_setup.h"
+#include "window.h"
 
-glfw_window_setup::glfw_window_setup()
+Window::Window()
 {
 
 	if (glfwInit() != GL_TRUE)
@@ -17,7 +17,7 @@ glfw_window_setup::glfw_window_setup()
 	
 }
 
-glfw_window_setup::~glfw_window_setup()
+Window::~Window()
 {
 	glfwTerminate();
 }
