@@ -54,7 +54,7 @@ int sample_rectangle(string vert_file, string frag_file)
     }
     glBindVertexArray(0);
 
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window->window))
     {
         glClearColor(.2f, .3f, .3f, 1.0f);

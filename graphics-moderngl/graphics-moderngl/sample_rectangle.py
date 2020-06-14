@@ -2,12 +2,11 @@ import moderngl_window
 import numpy as np
 
 
-class triangle(moderngl_window.WindowConfig):
+class rectangle(moderngl_window.WindowConfig):
     gl_version = (4, 3)
-    title = 'Sample Triangle'
-    resizable = True
-    aspect_ratio = 16 / 9
+    title = 'Rectangle'
     window_size = (1920, 1080)
+    resizable = True
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -16,15 +15,19 @@ class triangle(moderngl_window.WindowConfig):
             vertex_shader=open('../shaders/sample.vert').read(),
             fragment_shader=open('../shaders/sample.frag').read()
         )
-        vertices = np.array([
-            -.5, .0,
-            .0, .5,
-            .5, .0,
-        ])
+        vertices = np.array(
+            [
+                -.5, .5,
+                -.5, -.5,
+                .5, -.5,
+                .5, .5
+            ]
+        )
 
         indices = np.array(
             [
-                0, 1, 2,
+                0, 3, 2,
+                0, 2, 1
             ]
         )
 
@@ -45,4 +48,4 @@ class triangle(moderngl_window.WindowConfig):
         moderngl_window.run_window_config(cls)
 
 
-triangle.run()
+rectangle.run()
