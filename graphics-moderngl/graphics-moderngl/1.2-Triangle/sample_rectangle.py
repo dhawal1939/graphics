@@ -12,8 +12,8 @@ class rectangle(moderngl_window.WindowConfig):
         super().__init__(**kwargs)
 
         self.program = self.ctx.program(
-            vertex_shader=open('../shaders/sample.vert.glsl').read(),
-            fragment_shader=open('../shaders/sample.frag.glsl').read()
+            vertex_shader=open('../vert_frag_shaders/sample.vert.glsl').read(),
+            fragment_shader=open('../vert_frag_shaders/sample.frag.glsl').read()
         )
         vertices = np.array(
             [
@@ -38,6 +38,7 @@ class rectangle(moderngl_window.WindowConfig):
             (self.vbo, '2f', 'in_vert')
         ]
         self.vao = self.ctx.vertex_array(self.program, vao_content, self.ebo)
+        # self.ctx.wireframe = True
 
     def render(self, time: float, frame_time: float):
         self.ctx.clear(.3, .3, .4)

@@ -1,10 +1,11 @@
 import moderngl_window
+import moderngl
 import numpy as np
 
 
 class triangle(moderngl_window.WindowConfig):
     gl_version = (4, 3)
-    title = 'Sample Triangle'
+    title = 'Sample 1.2-Triangle'
     resizable = True
     aspect_ratio = 16 / 9
     window_size = (1920, 1080)
@@ -13,8 +14,8 @@ class triangle(moderngl_window.WindowConfig):
         super().__init__(**kwargs)
 
         self.program = self.ctx.program(
-            vertex_shader=open('../shaders/sample.vert.glsl').read(),
-            fragment_shader=open('../shaders/sample.frag.glsl').read()
+            vertex_shader=open('../vert_frag_shaders/sample.vert.glsl').read(),
+            fragment_shader=open('../vert_frag_shaders/sample.frag.glsl').read()
         )
         vertices = np.array([
             -.5, .0,
@@ -32,13 +33,20 @@ class triangle(moderngl_window.WindowConfig):
         self.ebo = self.ctx.buffer(indices.astype('int32').tobytes())
 
         vao_content = [
-            (self.vbo, '2f', 'in_vert') #2f for us say expect 2 floats to in_vert which is a vec2
+            (self.vbo, '2f', 'in_vert')
         ]
         self.vao = self.ctx.vertex_array(self.program, vao_content, self.ebo)
+        # uncomment the next line to plot only points
+        self.points = False  # if False else True
 
     def render(self, time: float, frame_time: float):
         self.ctx.clear(.0, .0, .0)
-        self.vao.render()
+        if self.points:
+            '''plot only points'''
+            mode = moderngl.POINTS
+        else:
+            mode = moderngl.TRIANGLES
+        self.vao.render(mode=mode)
 
     @classmethod
     def run(cls):

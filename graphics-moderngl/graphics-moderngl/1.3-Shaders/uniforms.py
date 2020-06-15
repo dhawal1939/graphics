@@ -17,8 +17,8 @@ class uniforms(moderngl_window.WindowConfig):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.program = self.ctx.program(vertex_shader=open("../shaders/uniforms.vert.glsl").read(),
-                                        fragment_shader=open("../shaders/uniforms.frag.glsl").read(),
+        self.program = self.ctx.program(vertex_shader=open("../vert_frag_shaders/uniforms.vert.glsl").read(),
+                                        fragment_shader=open("../vert_frag_shaders/uniforms.frag.glsl").read(),
                                         )
 
         vertices = np.array(
