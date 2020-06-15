@@ -32,7 +32,7 @@ class triangle(moderngl_window.WindowConfig):
         self.ebo = self.ctx.buffer(indices.astype('int32').tobytes())
 
         vao_content = [
-            (self.vbo, '2f', 'in_vert')
+            (self.vbo, '2f', 'in_vert') #2f for us say expect 2 floats to in_vert which is a vec2
         ]
         self.vao = self.ctx.vertex_array(self.program, vao_content, self.ebo)
 
