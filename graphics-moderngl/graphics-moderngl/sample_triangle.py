@@ -37,7 +37,7 @@ class triangle(moderngl_window.WindowConfig):
         self.vao = self.ctx.vertex_array(self.program, vao_content, self.ebo)
 
     def render(self, time: float, frame_time: float):
-        self.ctx.clear(.3, .3, .4)
+        self.ctx.clear(.0, .0, .0)
         self.vao.render()
 
     @classmethod
