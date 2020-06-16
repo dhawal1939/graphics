@@ -3,7 +3,7 @@ This is python variant to the C++ version presented in [`learnopengl`](https://l
 In this example we follow same template for window creation as the previous Window Creation
 specifying `gl_version, window_size, resizable flags etc`
 
-`program` using linking and compiling is a piece of cake now. Just pass in the `self.program` to the
+`program` using, linking and compiling is a piece of cake now. Just pass in the `self.program` to the
 `self.vao` which shall be rendered in `render` function.
 
 `vbo` holds the vertex data which is required for rendering the concept is similar to ones explained the
