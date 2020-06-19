@@ -14,8 +14,8 @@ class triangle(moderngl_window.WindowConfig):
         super().__init__(**kwargs)
 
         self.program = self.ctx.program(
-            vertex_shader=open('../vert_frag_shaders/sample.vert.glsl').read(),
-            fragment_shader=open('../vert_frag_shaders/sample.frag.glsl').read()
+            vertex_shader=open('sample_triangle.vert.glsl').read(),
+            fragment_shader=open('sample_triangle.frag.glsl').read()
         )
         vertices = np.array([
             -.5, .0,

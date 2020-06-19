@@ -10,8 +10,8 @@ class colored_triangle(moderngl_window.WindowConfig):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.program = self.ctx.program(vertex_shader=open("../vert_frag_shaders/triangle.vert.glsl").read(),
-                                        fragment_shader=open("../vert_frag_shaders/triangle.frag.glsl").read(),
+        self.program = self.ctx.program(vertex_shader=open("colored_triangle.vert.glsl").read(),
+                                        fragment_shader=open("colored_triangle.frag.glsl").read(),
                                         )
 
         vertices = np.array([
