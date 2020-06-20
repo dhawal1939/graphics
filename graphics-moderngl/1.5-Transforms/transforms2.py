@@ -1,20 +1,14 @@
-from pyrr import Matrix44
-import moderngl
-import moderngl_window
-from pathlib import Path
+
 import numpy as np
 
+import moderngl_window
 
-def terrain(size):
-    vertices = np.dstack(np.mgrid[0:size, 0:size][::-1]) / size
-    temp = np.dstack([np.arange(0, size * size - size), np.arange(size, size * size)])
-    index = np.pad(temp.reshape(size - 1, 2 * size), [[0, 0], [0, 1]], 'constant', constant_values=-1)
-    return vertices, index
 
-class MultiTextireTerrain(moderngl_window.WindowConfig):
-    title = "Multitexture Terrain"
+class InstancedRendering(moderngl_window.WindowConfig):
     gl_version = (3, 3)
-    resource_dir = (Path(__file__) / '../../').absolute()
+    title = "Instanced Rendering"
+    aspect_ratio = 1.0
+    window_size = (640, 640)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -22,93 +16,98 @@ class MultiTextireTerrain(moderngl_window.WindowConfig):
         self.prog = self.ctx.program(
             vertex_shader='''
                 #version 330
-                uniform mat4 Mvp;
-                uniform sampler2D Heightmap;
                 in vec2 in_vert;
-                out vec2 v_text;
+                in vec2 in_pos;
+                in float in_scale;
+                in vec3 in_color;
+                out vec3 v_color;
                 void main() {
-                    vec4 vertex = vec4(in_vert - 0.5, texture(Heightmap, in_vert).r * 0.2, 1.0);
-                    gl_Position = Mvp * vertex;
-                    v_text = in_vert;
+                    gl_Position = vec4(in_pos + (in_vert * in_scale), 0.0, 1.0);
+                    v_color = in_color;
                 }
             ''',
             fragment_shader='''
                 #version 330
-                uniform sampler2D Heightmap;
-                uniform sampler2D Color1;
-                uniform sampler2D Color2;
-                uniform sampler2D Cracks;
-                uniform sampler2D Darken;
-                in vec2 v_text;
+                in vec3 v_color;
                 out vec4 f_color;
                 void main() {
-                    float height = texture(Heightmap, v_text).r;
-                    float border = smoothstep(0.5, 0.7, height);
-                    vec3 color1 = texture(Color1, v_text * 7.0).rgb;
-                    vec3 color2 = texture(Color2, v_text * 6.0).rgb;
-                    vec3 color = color1 * (1.0 - border) + color2 * border;
-                    color *= 0.8 + 0.2 * texture(Darken, v_text * 3.0).r;
-                    color *= 0.5 + 0.5 * texture(Cracks, v_text * 5.0).r;
-                    color *= 0.5 + 0.5 * height;
-                    f_color = vec4(color, 1.0);
+                    f_color = vec4(v_color, 1.0);
                 }
             ''',
         )
 
-        self.mvp = self.prog['Mvp']
+        # Vertex coordinates stored in position_vertex_buffer
+        #
+        #     B------D
+        #     |      |
+        #     A------C
+        vertices = np.array([
+            -0.5, -0.5,
+            -0.5, 0.5,
+            0.5, -0.5,
+            0.5, 0.5,
+        ])
 
-        vertices, index = terrain(32)
+        self.position_vertex_buffer = self.ctx.buffer(vertices.astype('f4').tobytes())
 
-        self.vbo = self.ctx.buffer(vertices.astype('f4').tobytes())
-        self.ibo = self.ctx.buffer(index.astype('i4').tobytes())
+        # Vertex colors stored in color_buffer
+        #
+        #     A, B are green
+        #     C, D are blue
+        colors = np.array([
+            0.0, 1.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+        ])
+        self.color_buffer = self.ctx.buffer(colors.astype('f4').tobytes())
 
+        # (Per instance) positions and scales stored in pos_scale_buffer
+        # There are 8 (x_position, y_position, scale) pairs
+        position_scale = np.array([
+            0.5, 0.0, 0.3,
+            0.35, 0.35, 0.2,
+            0.0, 0.5, 0.3,
+            -0.35, 0.35, 0.2,
+            -0.5, 0.0, 0.3,
+            -0.35, -0.35, 0.2,
+            0.0, -0.5, 0.3,
+            0.35, -0.35, 0.2,
+        ])
+        self.pos_scale_buffer = self.ctx.buffer(position_scale.astype('f4').tobytes())
+
+        # Index buffer (also called element buffer)
+        # There are 2 trianges to render
+        #
+        #     A, B, C
+        #     B, C, D
+        render_indicies = np.array([
+            0, 1, 2,
+            1, 2, 3
+        ])
+        self.index_buffer = self.ctx.buffer(render_indicies.astype('i4').tobytes())
+
+        # The vao_content is a list of 3-tuples (buffer, format, attribs)
+        # the format can have an empty or '/v', '/i', '/r' ending.
+        # '/v' attributes are the default
+        # '/i` attributes are per instance attributes
+        # '/r' attributes are default values for the attributes (per render attributes)
         vao_content = [
-            (self.vbo, '2f', 'in_vert'),
+            (self.position_vertex_buffer, '2f', 'in_vert'),
+            (self.color_buffer, '3f', 'in_color'),
+            (self.pos_scale_buffer, '2f 1f/i', 'in_pos', 'in_scale'),
         ]
 
-        self.vao = self.ctx.vertex_array(self.prog, vao_content, self.ibo)
+        self.vao = self.ctx.vertex_array(self.prog, vao_content, self.index_buffer)
 
-        self.tex0 = self.load_texture_2d('imgs/heightmap.jpg')
-        self.tex0.build_mipmaps()
-        self.tex1 = self.load_texture_2d('imgs/grass.jpg')
-        self.tex1.build_mipmaps()
-        self.tex2 = self.load_texture_2d('imgs/rock.jpg')
-        self.tex2.build_mipmaps()
-        self.tex3 = self.load_texture_2d('imgs/cracks.jpg')
-        self.tex3.build_mipmaps()
-        self.tex4 = self.load_texture_2d('imgs/checked.jpg')
-        self.tex4.build_mipmaps()
-
-        self.prog['Heightmap'].value = 0
-        self.prog['Color1'].value = 1
-        self.prog['Color2'].value = 2
-        self.prog['Cracks'].value = 3
-        self.prog['Darken'].value = 4
+    def render(self, time: float, frame_time: float):
+        self.ctx.clear(1.0, 1.0, 1.0)
+        self.vao.render(instances=1)
 
     @classmethod
     def run(cls):
         moderngl_window.run_window_config(cls)
-    def render(self, time, frame_time):
-        angle = time * 0.2
-        self.ctx.clear(1.0, 1.0, 1.0)
-        self.ctx.enable(moderngl.DEPTH_TEST)
-
-        self.tex0.use(0)
-        self.tex1.use(1)
-        self.tex2.use(2)
-        self.tex3.use(3)
-        self.tex4.use(4)
-
-        proj = Matrix44.perspective_projection(45.0, self.aspect_ratio, 0.1, 1000.0)
-        lookat = Matrix44.look_at(
-            (np.cos(angle), np.sin(angle), 0.8),
-            (0.0, 0.0, 0.1),
-            (0.0, 0.0, 1.0),
-        )
-
-        self.mvp.write((proj * lookat).astype('f4').tobytes())
-        self.vao.render(moderngl.TRIANGLE_STRIP)
 
 
 if __name__ == '__main__':
-    MultiTextireTerrain.run()
+    InstancedRendering.run()
