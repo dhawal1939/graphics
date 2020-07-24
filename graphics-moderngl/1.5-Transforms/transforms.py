@@ -71,7 +71,7 @@ class transforms(moderngl_window.WindowConfig):
         self.ctx.clear(.0, .0, .0)
 
         import math
-        self.program['uni_color'] = tuple([math.sin(time) / 2.0 + .5] * 3 + [1.0])
+        self.program['uni_color'].write(np.array([math.sin(time) / 2.0 + .5] * 3 + [1.0]).astype('f4').tobytes())
         model_view = glm.mat4(1.0)
         model_view = glm.translate(model_view, glm.vec3(.5, .5, .0))
         model_view = glm.rotate(model_view, glm.radians(90), glm.vec3(.0, .0, 1.0))
@@ -84,8 +84,8 @@ class transforms(moderngl_window.WindowConfig):
 
         self.program['transform'].write(model_view)
 
-        self.texture_fg.use(1)
-        self.texture_bg.use(0)
+        self.texture_fg.use(0)
+        self.texture_bg.use(1)
         self.vao.render()
 
     @classmethod
