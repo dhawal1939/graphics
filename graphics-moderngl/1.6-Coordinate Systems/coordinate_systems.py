@@ -60,7 +60,6 @@ class coordinate_systems(moderngl_window.WindowConfig):
         self.ctx.clear(.0, .0, .0)
         model = glm.mat4(1.0)
         view = glm.mat4(1.0)
-        projection = glm.mat4(1.0)
 
         model = glm.rotate(model, glm.radians(-55.0), glm.vec3(1., .0, .0))
         view = glm.translate(view, glm.vec3(.0, .0, -3.0))
