@@ -128,7 +128,10 @@ class cube_withoutdepth(moderngl_window.WindowConfig):
 
     def render(self, time: float, frame_time: float):
         self.ctx.clear(.0, .0, .0)
-        self.ctx.enable(moderngl.DEPTH_TEST)
+
+        # Uncomment this line to get the Depth based Box
+        # self.ctx.enable(moderngl.DEPTH_TEST)
+
         model, view = glm.mat4(1.0), glm.mat4(1.0)
 
         model = glm.rotate(model, time * glm.radians(45), glm.vec3(.5, 1., .0))
