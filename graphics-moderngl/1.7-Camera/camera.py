@@ -5,19 +5,19 @@ import numpy as np
 import glm
 import math
 
-class multi_cube(moderngl_window.WindowConfig):
+class camera(moderngl_window.WindowConfig):
     gl_version = (4, 3)
     resource_dir = Path('.').absolute()
     resizable = True
     window_size = (1920, 1080)
     aspect_ratio = 16 / 9
-    title = "Multi Cube"
+    title = "Camera"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.program = self.ctx.program(vertex_shader=open("./coordinate_systems.vert.glsl").read(),
-                                        fragment_shader=open("./coordinate_system.frag.glsl").read())
+        self.program = self.ctx.program(vertex_shader=open("./camera_demo.vert.glsl").read(),
+                                        fragment_shader=open("./camera_demo.frag.glsl").read())
 
         self.texture_bg = self.load_texture_2d('../imgs/wall.jpg')
         self.texture_fg = self.load_texture_2d('../imgs/awesomeface.png')
@@ -151,10 +151,10 @@ class multi_cube(moderngl_window.WindowConfig):
         self.texture_fg.use(1)
 
         radius = 10.0
-        view = glm.lookAt(glm.vec3(math.sin(time * radius), .0, math.cos(time * radius)),
+        view = glm.lookAt(glm.vec3(math.sin(time) * radius, .0, math.cos(time) * radius),
                           glm.vec3(.0, .0, .0), glm.vec3(.0, 1., .0))
 
-        projection = glm.perspective(glm.radians(45.0), 1920 / 1080, 0.1, 100.0)
+        projection = glm.perspective(glm.radians(45.0), self.aspect_ratio, 0.1, 100.)
 
         self.program["projection"].write(projection)
 
@@ -162,7 +162,7 @@ class multi_cube(moderngl_window.WindowConfig):
 
         for i in range(len(self.cube_positions)):
             model = glm.translate(model, self.cube_positions[i])
-            angle = 20. * time
+            angle = 20. * i
             model = glm.rotate(model, glm.radians(angle), glm.vec3(1., .3, .5))
 
             self.program['model'].write(model)
@@ -173,4 +173,4 @@ class multi_cube(moderngl_window.WindowConfig):
         moderngl_window.run_window_config(cls)
 
 
-multi_cube.run()
+camera.run()

@@ -3,21 +3,27 @@ import moderngl_window
 from pathlib import Path
 import numpy as np
 import glm
-import math
 
-class multi_cube(moderngl_window.WindowConfig):
+
+class walk_around(moderngl_window.WindowConfig):
     gl_version = (4, 3)
-    resource_dir = Path('.').absolute()
     resizable = True
-    window_size = (1920, 1080)
+    resource_dir = Path('.').absolute()
     aspect_ratio = 16 / 9
-    title = "Multi Cube"
+    title = 'Walk Around'
+    window_size = (1920, 1080)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.program = self.ctx.program(vertex_shader=open("./coordinate_systems.vert.glsl").read(),
-                                        fragment_shader=open("./coordinate_system.frag.glsl").read())
+        self.cam_up = glm.vec3(.0, 1., .0)
+        self.cam_pos = glm.vec3(.0, .0, 3.)
+        self.cam_front = glm.vec3(.0, .0, -1.)
+
+        # uncomment for moment speed
+        # self.last_frame, self.delta_time = .0, .0
+        self.program = self.ctx.program(vertex_shader=open('./camera_demo.vert.glsl').read(),
+                                        fragment_shader=open('./camera_demo.frag.glsl').read())
 
         self.texture_bg = self.load_texture_2d('../imgs/wall.jpg')
         self.texture_fg = self.load_texture_2d('../imgs/awesomeface.png')
@@ -142,19 +148,21 @@ class multi_cube(moderngl_window.WindowConfig):
         self.vao = self.ctx.vertex_array(self.program, self.vao_content)
 
     def render(self, time: float, frame_time: float):
+
         self.ctx.clear(.0, .0, .0)
         self.ctx.enable(moderngl.DEPTH_TEST)
 
-        model, view = glm.mat4(1.0), glm.mat4(1.0)
+        # uncomment for moment speed
+        # self.delta_time = time - self.last_frame
+        # self.last_frame = time
 
+        model = glm.mat4(1.)
         self.texture_bg.use(0)
         self.texture_fg.use(1)
 
-        radius = 10.0
-        view = glm.lookAt(glm.vec3(math.sin(time * radius), .0, math.cos(time * radius)),
-                          glm.vec3(.0, .0, .0), glm.vec3(.0, 1., .0))
+        view = glm.lookAt(self.cam_pos, self.cam_pos + self.cam_front, self.cam_up)
 
-        projection = glm.perspective(glm.radians(45.0), 1920 / 1080, 0.1, 100.0)
+        projection = glm.perspective(glm.radians(45.0), self.aspect_ratio, 0.1, 100.)
 
         self.program["projection"].write(projection)
 
@@ -162,15 +170,29 @@ class multi_cube(moderngl_window.WindowConfig):
 
         for i in range(len(self.cube_positions)):
             model = glm.translate(model, self.cube_positions[i])
-            angle = 20. * time
+            angle = 20. * i
             model = glm.rotate(model, glm.radians(angle), glm.vec3(1., .3, .5))
 
             self.program['model'].write(model)
             self.vao.render()
+
+    def key_event(self, key, action, modifiers):
+        keys = self.wnd.keys
+        # uncomment for moment speed
+        cam_speed = 2.5  # * self.delta_time
+        if action == keys.ACTION_PRESS:
+            if key == keys.W:
+                self.cam_pos += cam_speed * self.cam_front
+            if key == keys.S:
+                self.cam_pos -= cam_speed * self.cam_front
+            if key == keys.A:
+                self.cam_pos -= glm.normalize(glm.cross(self.cam_front, self.cam_up))
+            if key == keys.D:
+                self.cam_pos += glm.normalize(glm.cross(self.cam_front, self.cam_up))
 
     @classmethod
     def run(cls):
         moderngl_window.run_window_config(cls)
 
 
-multi_cube.run()
+walk_around.run()
